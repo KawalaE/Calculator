@@ -1,0 +1,81 @@
+body{
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.page-content{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+
+}
+.calculator{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.calculator{
+    background-color: rgb(109, 230, 163);
+    width: 390px;
+    height: 580px;
+    border-radius: 20px;
+    box-shadow: 4px 4px 10px 2px rgba(39, 92, 70, 0.8);
+}
+.display{
+    background-image: linear-gradient(
+        to right, 
+        rgb(209, 231, 222), #ffffff
+      );
+    width: 330px;
+    height: 90px;
+    border-radius: 20px;
+    outline: 3px solid rgb(135, 143, 143);
+    box-shadow: 1px 1px 1px 1px rgba(5, 5, 5, 0.8);
+    margin: 40px;
+}
+.numbers{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+button{
+    font-size: 20px;
+    height: 70px;
+    width: 70px;
+    background-color: #dffaec;
+    border-radius: 50%;
+    outline: 1px solid white;
+    margin-right: 8px;
+    box-shadow: 2px 2px 5px 1px rgba(5, 5, 5, 0.8);
+}
+.plus, .divide, .multiply, .minus, .equal{
+    background-color: #f0f5a6;
+}
+.clear{
+    height: 30px;
+    width: 70px; 
+    border-radius: 10px;
+    background-color: rgb(247, 169, 53);
+    margin-bottom: 10px;
+}
+.clear:hover{
+    background-color: rgb(245, 150, 7);
+}
+button:hover{
+    background-color: #c5f8de;
+}
+.plus:hover, .divide:hover, .multiply:hover, .minus:hover, .equal:hover{
+    background-color: #f1e182;
+}
+
+.footer-elements{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #6c9b71;
+    margin-top: 5px;
+}
+.footer-git:hover{
+    transform: rotate(180deg) scale(1.1);
+    filter: brightness(300%);
+}

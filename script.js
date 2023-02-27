@@ -29,4 +29,4 @@ function operate(operator, firstNumber, secondNumber){
 
     }
 };
-console.log(operate('/', 3,2));
+console.log(operate('', 3,2));
