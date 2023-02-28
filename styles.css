@@ -72,12 +72,12 @@ button:hover{
     background-color: #f1e182;
 }
 .display-font{
-    font-size: 60px;
+    font-size: 55px;
     display: flex;
     justify-content: right;
     color:#646e66;
     margin-top: 10px;
-    margin-right: 5px;
+    margin-right: 10px;
  
 }
 .footer-elements{
