@@ -55,7 +55,7 @@ button{
 .plus, .divide, .multiply, .minus, .equal{
     background-color: #f0f5a6;
 }
-.clear{
+.clear, .remove{
     height: 30px;
     width: 70px; 
     border-radius: 10px;
@@ -71,6 +71,7 @@ button:hover{
 .plus:hover, .divide:hover, .multiply:hover, .minus:hover, .equal:hover{
     background-color: #f1e182;
 }
+
 .display-font{
     font-size: 55px;
     display: flex;

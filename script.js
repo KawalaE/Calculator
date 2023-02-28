@@ -32,7 +32,6 @@ function operate(operator, firstNumber, secondNumber){
 //console.log(operate('', 3,2));
 
 let currentNumberArray = [];
-
 let currentNumber = ""; 
 
 let inputNumbers = document.createElement('div');
@@ -47,9 +46,15 @@ clear.addEventListener('click', () => {
     inputNumbers.textContent = `${currentNumber}`;
 });
 
+let remove = document.querySelector('.remove');
+remove.addEventListener('click', () => {
+    currentNumberArray.pop();
+    currentNumber = currentNumber.slice(0,-1);
+    inputNumbers.textContent = `${currentNumber}`;
+});
+
 let seven = document.querySelector('.seven');
 seven.addEventListener('click', () => {
-    currentNumberArray.splice(9);
     currentNumberArray.push(7);
     currentNumber = currentNumberArray.join("");
     inputNumbers.textContent = `${currentNumber}`;
@@ -58,7 +63,6 @@ seven.addEventListener('click', () => {
 
 let eight = document.querySelector('.eight');
 eight.addEventListener('click', () => {
-    currentNumberArray.splice(9);
     currentNumberArray.push(8);
     currentNumber = currentNumberArray.join("");
     inputNumbers.textContent = `${currentNumber}`;
@@ -67,7 +71,6 @@ eight.addEventListener('click', () => {
 
 let nine = document.querySelector('.nine');
 nine.addEventListener('click', () => {
-    currentNumberArray.splice(9);
     currentNumberArray.push(9);
     currentNumber = currentNumberArray.join("");
     inputNumbers.textContent = `${currentNumber}`;
@@ -76,7 +79,6 @@ nine.addEventListener('click', () => {
 
 let four = document.querySelector('.four');
 four.addEventListener('click', () => {
-    currentNumberArray.splice(9);
     currentNumberArray.push(4);
     currentNumber = currentNumberArray.join("");
     inputNumbers.textContent = `${currentNumber}`;
@@ -85,7 +87,6 @@ four.addEventListener('click', () => {
 
 let five = document.querySelector('.five');
 five.addEventListener('click', () => {
-    currentNumberArray.splice(9);
     currentNumberArray.push(5);
     currentNumber = currentNumberArray.join("");
     inputNumbers.textContent = `${currentNumber}`;
@@ -94,7 +95,6 @@ five.addEventListener('click', () => {
 
 let six = document.querySelector('.six');
 six.addEventListener('click', () => {
-    currentNumberArray.splice(9);
     currentNumberArray.push(6);
     currentNumber = currentNumberArray.join("");
     inputNumbers.textContent = `${currentNumber}`;
@@ -103,7 +103,6 @@ six.addEventListener('click', () => {
 
 let three = document.querySelector('.three');
 three.addEventListener('click', () => {
-    currentNumberArray.splice(9);
     currentNumberArray.push(3);
     currentNumber = currentNumberArray.join("");
     inputNumbers.textContent = `${currentNumber}`;
@@ -112,7 +111,6 @@ three.addEventListener('click', () => {
 
 let two = document.querySelector('.two');
 two.addEventListener('click', () => {
-    currentNumberArray.splice(9);
     currentNumberArray.push(2);
     currentNumber = currentNumberArray.join("");
     inputNumbers.textContent = `${currentNumber}`;
@@ -121,7 +119,6 @@ two.addEventListener('click', () => {
 
 let one = document.querySelector('.one');
 one.addEventListener('click', () => {
-    currentNumberArray.splice(9);
     currentNumberArray.push(1);
     currentNumber = currentNumberArray.join("");
     inputNumbers.textContent = `${currentNumber}`;
@@ -130,7 +127,6 @@ one.addEventListener('click', () => {
 
 let zero = document.querySelector('.zero');
 zero.addEventListener('click', () => {
-    currentNumberArray.splice(9);
     currentNumberArray.push(0);
     currentNumber = currentNumberArray.join("");
     inputNumbers.textContent = `${currentNumber}`;
@@ -139,9 +135,9 @@ zero.addEventListener('click', () => {
 
 let dot = document.querySelector('.dot');
 dot.addEventListener('click', () => {
-    currentNumberArray.splice(9);
     currentNumberArray.push('.');
     currentNumber = currentNumberArray.join("");
     inputNumbers.textContent = `${currentNumber}`;
     
 });
+
