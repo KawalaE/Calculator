@@ -39,33 +39,33 @@ let multiply = document.querySelector('.multiply')
 let currentNumberArray = [];
 let currentNumber = ""; 
 let numbers = []
+let lastOperator;
 
-equal.addEventListener('click', () =>{
-    numbers.push(Number(currentNumberArray.join("")));
-})
 function operatorHandler(operatorSymbol){
-    
-    numbers.push(Number(currentNumberArray.join("")));
-    currentNumberArray.length = 0;
-    currentNumber = "";
-    inputNumbers.textContent = `${currentNumber}`;
-    
+    if(!(lastOperator==='=')){
+        numbers.push(Number(currentNumberArray.join("")));
+        currentNumberArray.length = 0;
+        currentNumber = "";
+        inputNumbers.textContent = `${currentNumber}`;
+    }
+
     if(numbers.length == 2){
-        calculate = operate(operatorSymbol, numbers[0], numbers[1]);
+
+        calculate = operate(lastOperator, numbers[0], numbers[1]);
         inputNumbers.textContent = `${calculate}`;
         numbers.length = 1;
         numbers[0] = calculate;
+ 
     }
+    lastOperator = operatorSymbol;
     
 }
-
-
 
 add.addEventListener('click', () => operatorHandler('+'));
 subtract.addEventListener('click', () => operatorHandler('-'));
 divide.addEventListener('click', () => operatorHandler('/'));
 multiply.addEventListener('click', () => operatorHandler('*'));
-
+equal.addEventListener('click', () => operatorHandler('='))
 
 let inputNumbers = document.createElement('div');
 inputNumbers.classList.add('display-font');
@@ -95,6 +95,7 @@ function choiceHandler(buttonChoice, number){
         currentNumberArray.length = 0;
         currentNumber = "";
         inputNumbers.textContent = `${currentNumber}`;
+        numbers.length = 0;
     }
     else if (buttonChoice === remove){
         currentNumberArray.pop();
@@ -131,4 +132,3 @@ dot.addEventListener('click', () => {
 
 });
 
-console.log(currentNumberArray);
