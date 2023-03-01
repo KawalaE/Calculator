@@ -29,10 +29,43 @@ function operate(operator, firstNumber, secondNumber){
 
     }
 };
-//console.log(operate('', 3,2));
+
+let equal = document.querySelector('.equal');
+let add = document.querySelector('.plus');
+let subtract = document.querySelector('.minus');
+let divide = document.querySelector('.divide');
+let multiply = document.querySelector('.multiply')
 
 let currentNumberArray = [];
 let currentNumber = ""; 
+let numbers = []
+
+equal.addEventListener('click', () =>{
+    numbers.push(Number(currentNumberArray.join("")));
+})
+function operatorHandler(operatorSymbol){
+    
+    numbers.push(Number(currentNumberArray.join("")));
+    currentNumberArray.length = 0;
+    currentNumber = "";
+    inputNumbers.textContent = `${currentNumber}`;
+    
+    if(numbers.length == 2){
+        calculate = operate(operatorSymbol, numbers[0], numbers[1]);
+        inputNumbers.textContent = `${calculate}`;
+        numbers.length = 1;
+        numbers[0] = calculate;
+    }
+    
+}
+
+
+
+add.addEventListener('click', () => operatorHandler('+'));
+subtract.addEventListener('click', () => operatorHandler('-'));
+divide.addEventListener('click', () => operatorHandler('/'));
+multiply.addEventListener('click', () => operatorHandler('*'));
+
 
 let inputNumbers = document.createElement('div');
 inputNumbers.classList.add('display-font');
@@ -41,6 +74,7 @@ displayScreen.appendChild(inputNumbers);
 
 let clear = document.querySelector('.clear');
 let remove = document.querySelector('.remove');
+
 
 let seven = document.querySelector('.seven');
 let eight = document.querySelector('.eight');
@@ -53,6 +87,7 @@ let two = document.querySelector('.two');
 let one = document.querySelector('.one');
 let zero = document.querySelector('.zero');
 let dot = document.querySelector('.dot');
+
 
 function choiceHandler(buttonChoice, number){
   
@@ -67,8 +102,10 @@ function choiceHandler(buttonChoice, number){
         inputNumbers.textContent = `${currentNumber}`;
     }
     else if(currentNumberArray.length <= 9){
+        if(currentNumberArray[0] == "0" && currentNumberArray.length == 1 && !(number ==".")){
+            currentNumberArray.shift();
+        }
         currentNumberArray.push(number);
-        console.log(currentNumberArray)
         currentNumber = currentNumberArray.join("");
         inputNumbers.textContent = `${currentNumber}`;
 
@@ -94,3 +131,4 @@ dot.addEventListener('click', () => {
 
 });
 
+console.log(currentNumberArray);
