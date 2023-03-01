@@ -55,22 +55,24 @@ let zero = document.querySelector('.zero');
 let dot = document.querySelector('.dot');
 
 function choiceHandler(buttonChoice, number){
+  
     if (buttonChoice === clear){
-        currentNumberArray = [];
+        currentNumberArray.length = 0;
         currentNumber = "";
         inputNumbers.textContent = `${currentNumber}`;
     }
-    if (buttonChoice === remove){
+    else if (buttonChoice === remove){
         currentNumberArray.pop();
         currentNumber = currentNumber.slice(0,-1);
         inputNumbers.textContent = `${currentNumber}`;
     }
-    else {
+    else if(currentNumberArray.length <= 9){
         currentNumberArray.push(number);
+        console.log(currentNumberArray)
         currentNumber = currentNumberArray.join("");
         inputNumbers.textContent = `${currentNumber}`;
 
-    }
+    } 
 }
 
 clear.addEventListener('click', () => choiceHandler(clear));
