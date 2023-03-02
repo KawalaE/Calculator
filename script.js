@@ -42,23 +42,25 @@ displayScreen.appendChild(inputNumbers);
 
 
 function operatorHandler(operatorSymbol){
-    if(!(lastOperator==='=')){
-        numbers.push(Number(currentNumberArray.join("")));
-        currentNumberArray.length = 0;
-        currentNumber = "";
-        inputNumbers.textContent = `${currentNumber}`;
-    }
+    
+    numbers.push(Number(currentNumberArray.join("")));
+    currentNumberArray.length = 0;
+    currentNumber = "";
+    inputNumbers.textContent = `${currentNumber}`;
+    
 
     if(numbers.length == 2){
 
         calculate = operate(lastOperator, numbers[0], numbers[1]);
-        console.log(calculate)
-        let checkDecimal = (calculate.toString()).split('.');
-        let decimalCount = (checkDecimal[1]).split('');
-        if(decimalCount.length > 4){
+        if((String(calculate)).includes(".")){
+            let checkDecimal = (calculate.toString()).split('.');
+            let decimalCount = (checkDecimal[1]).split('');
+            if(decimalCount.length >= 4){
             calculate = calculate.toFixed(3);
+            } 
         }
-        console.log(decimalCount)
+        
+        console.log(calculate)
         inputNumbers.textContent = `${calculate}`;
         numbers.length = 1;
         numbers[0] = calculate;
