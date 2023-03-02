@@ -30,16 +30,16 @@ function operate(operator, firstNumber, secondNumber){
     }
 };
 
-let equal = document.querySelector('.equal');
-let add = document.querySelector('.plus');
-let subtract = document.querySelector('.minus');
-let divide = document.querySelector('.divide');
-let multiply = document.querySelector('.multiply')
 
 let currentNumberArray = [];
 let currentNumber = ""; 
 let numbers = []
 let lastOperator;
+let inputNumbers = document.createElement('div');
+inputNumbers.classList.add('display-font');
+let displayScreen = document.querySelector('.display')
+displayScreen.appendChild(inputNumbers);
+
 
 function operatorHandler(operatorSymbol){
     if(!(lastOperator==='=')){
@@ -61,48 +61,9 @@ function operatorHandler(operatorSymbol){
     
 }
 
-add.addEventListener('click', () => operatorHandler('+'));
-subtract.addEventListener('click', () => operatorHandler('-'));
-divide.addEventListener('click', () => operatorHandler('/'));
-multiply.addEventListener('click', () => operatorHandler('*'));
-equal.addEventListener('click', () => operatorHandler('='))
-
-let inputNumbers = document.createElement('div');
-inputNumbers.classList.add('display-font');
-let displayScreen = document.querySelector('.display')
-displayScreen.appendChild(inputNumbers);
-
-let clear = document.querySelector('.clear');
-let remove = document.querySelector('.remove');
-
-
-let seven = document.querySelector('.seven');
-let eight = document.querySelector('.eight');
-let nine = document.querySelector('.nine');
-let four = document.querySelector('.four');
-let five = document.querySelector('.five');
-let six = document.querySelector('.six');
-let three = document.querySelector('.three');
-let two = document.querySelector('.two');
-let one = document.querySelector('.one');
-let zero = document.querySelector('.zero');
-let dot = document.querySelector('.dot');
-
-
-function choiceHandler(buttonChoice, number){
-  
-    if (buttonChoice === clear){
-        currentNumberArray.length = 0;
-        currentNumber = "";
-        inputNumbers.textContent = `${currentNumber}`;
-        numbers.length = 0;
-    }
-    else if (buttonChoice === remove){
-        currentNumberArray.pop();
-        currentNumber = currentNumber.slice(0,-1);
-        inputNumbers.textContent = `${currentNumber}`;
-    }
-    else if(currentNumberArray.length <= 9){
+function choiceHandler(number){
+    /*Limit the amount of numbers visible at the display*/ 
+    if(currentNumberArray.length <= 9){
         if(currentNumberArray[0] == "0" && currentNumberArray.length == 1 && !(number ==".")){
             currentNumberArray.shift();
         }
@@ -113,22 +74,35 @@ function choiceHandler(buttonChoice, number){
     } 
 }
 
-clear.addEventListener('click', () => choiceHandler(clear));
-remove.addEventListener('click', () =>  choiceHandler(remove));
-seven.addEventListener('click', () => choiceHandler(seven, 7));
-eight.addEventListener('click', () => choiceHandler(eight, 8));
-nine.addEventListener('click', () => choiceHandler(nine, 9));
-four.addEventListener('click', () => choiceHandler(four, 4));
-five.addEventListener('click', () => choiceHandler(five, 5));
-six.addEventListener('click', () => choiceHandler(six, 6 ));
-three.addEventListener('click', () => choiceHandler(three, 3));
-two.addEventListener('click', () => choiceHandler(two, 2));
-one.addEventListener('click', () => choiceHandler(one, 1));
-zero.addEventListener('click', () => choiceHandler(zero, 0));
-dot.addEventListener('click', () => {
-    if(currentNumberArray.length == 0 && !currentNumberArray.includes(".") && !currentNumberArray.includes("0.")){
-        choiceHandler(dot, "0.");
-    } else if(!currentNumberArray.includes(".") && !currentNumberArray.includes("0.")){choiceHandler(dot,".")}
+/* Get the nodelist of all button-operators */
+let operatorButtons = document.querySelectorAll('.operator')
 
-});
+operatorButtons.forEach((operButton) => {
+    operButton.addEventListener('click', () => {
+        let getOperator = operButton.textContent;
+        if(getOperator == '.'){
+            if(currentNumberArray.length == 0 && !currentNumberArray.includes(".") && !currentNumberArray.includes("0.")){
+                choiceHandler("0.");
+            } else if(!currentNumberArray.includes(".") && !currentNumberArray.includes("0.")){choiceHandler(".")}
+        } else {
+            operatorHandler(getOperator);
+            console.log(getOperator);
+        }
+        
+    })
+})
+
+
+/* Get the nodelist of all button-numbers */
+let numberButtons = document.querySelectorAll('.number');
+
+numberButtons.forEach((numButton)=>{
+    numButton.addEventListener('click', () => {
+        let getNumber = numButton.textContent;
+        choiceHandler(Number(getNumber));
+    })
+})
+
+
+
 
