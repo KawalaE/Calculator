@@ -54,7 +54,7 @@ function operatorHandler(operatorSymbol){
         calculate = operate(lastOperator, numbers[0], numbers[1]);
         console.log(calculate)
         let checkDecimal = (calculate.toString()).split('.');
-        let decimalCount = checkDecimal[1].split('');
+        let decimalCount = (checkDecimal[1]).split('');
         if(decimalCount.length > 4){
             calculate = calculate.toFixed(3);
         }
