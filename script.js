@@ -52,6 +52,13 @@ function operatorHandler(operatorSymbol){
     if(numbers.length == 2){
 
         calculate = operate(lastOperator, numbers[0], numbers[1]);
+        console.log(calculate)
+        let checkDecimal = (calculate.toString()).split('.');
+        let decimalCount = checkDecimal[1].split('');
+        if(decimalCount.length > 4){
+            calculate = calculate.toFixed(3);
+        }
+        console.log(decimalCount)
         inputNumbers.textContent = `${calculate}`;
         numbers.length = 1;
         numbers[0] = calculate;
