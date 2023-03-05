@@ -39,35 +39,39 @@ let inputNumbers = document.createElement('div');
 inputNumbers.classList.add('display-font');
 let displayScreen = document.querySelector('.display')
 displayScreen.appendChild(inputNumbers);
-
+let calculate;
 
 function operatorHandler(operatorSymbol){
-    
+    /* does not work
     numbers.push(Number(currentNumberArray.join("")));
     currentNumberArray.length = 0;
     currentNumber = "";
     inputNumbers.textContent = `${currentNumber}`;
     
-
     if(numbers.length == 2){
+        if(!(operatorSymbol == "=")){
+            calculate = operate(lastOperator, numbers[0], numbers[1]);
 
-        calculate = operate(lastOperator, numbers[0], numbers[1]);
-        if((String(calculate)).includes(".")){
-            let checkDecimal = (calculate.toString()).split('.');
-            let decimalCount = (checkDecimal[1]).split('');
-            if(decimalCount.length >= 4){
-            calculate = calculate.toFixed(3);
-            } 
+            console.log(calculate)
+            if((String(calculate)).includes(".")){
+                let checkDecimal = (calculate.toString()).split('.');
+                let decimalCount = (checkDecimal[1]).split('');
+                if(decimalCount.length >= 4){
+                calculate = calculate.toFixed(3);
+                } 
+            console.log(calculate)
+            }
         }
-        
-        console.log(calculate)
-        inputNumbers.textContent = `${calculate}`;
-        numbers.length = 1;
-        numbers[0] = calculate;
+        if(operatorSymbol =="="){
+            inputNumbers.textContent = `${calculate}`;
+            console.log(numbers)
+            numbers.pop();
+            numbers[0] = calculate;
+            console.log(numbers)
+        }
  
     }
-    lastOperator = operatorSymbol;
-    
+    lastOperator = operatorSymbol;*/
 }
 
 function choiceHandler(number){
@@ -95,7 +99,6 @@ operatorButtons.forEach((operButton) => {
             } else if(!currentNumberArray.includes(".") && !currentNumberArray.includes("0.")){choiceHandler(".")}
         } else {
             operatorHandler(getOperator);
-            console.log(getOperator);
         }
         
     })

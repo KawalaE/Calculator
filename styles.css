@@ -91,5 +91,5 @@ button:hover{
 }
 .footer-git:hover{
     transform: rotate(180deg) scale(1.1);
-    filter: brightness(300%);
+    filter: brightness(200%);
 }
