@@ -30,48 +30,50 @@ function operate(operator, firstNumber, secondNumber){
     }
 };
 
-
 let currentNumberArray = [];
 let currentNumber = ""; 
-let numbers = []
+let numbers = [];
 let lastOperator;
+let operationValue = 0;
+let calculate = 0;
+let equalPressed = 0;
 let inputNumbers = document.createElement('div');
 inputNumbers.classList.add('display-font');
 let displayScreen = document.querySelector('.display')
 displayScreen.appendChild(inputNumbers);
-let calculate;
+
+let evaluateEquation = document.querySelector('.equal')
+evaluateEquation.addEventListener('click', () => {
+    numbers.push(Number(currentNumberArray.join("")));
+    currentNumberArray.length = 0;
+    
+    if(numbers.length == 2){
+        calculate = operate(lastOperator, numbers[0], numbers[1]);
+        inputNumbers.textContent = `${calculate}`;
+        numbers.pop();
+        numbers[0] = calculate;
+    } 
+    equalPressed = 1;
+})
 
 function operatorHandler(operatorSymbol){
-    /* does not work
-    numbers.push(Number(currentNumberArray.join("")));
+    if(equalPressed != 1){
+        numbers.push(Number(currentNumberArray.join("")));
+    }
+    equalPressed = 0;
     currentNumberArray.length = 0;
     currentNumber = "";
     inputNumbers.textContent = `${currentNumber}`;
     
+    
     if(numbers.length == 2){
-        if(!(operatorSymbol == "=")){
-            calculate = operate(lastOperator, numbers[0], numbers[1]);
-
-            console.log(calculate)
-            if((String(calculate)).includes(".")){
-                let checkDecimal = (calculate.toString()).split('.');
-                let decimalCount = (checkDecimal[1]).split('');
-                if(decimalCount.length >= 4){
-                calculate = calculate.toFixed(3);
-                } 
-            console.log(calculate)
-            }
-        }
-        if(operatorSymbol =="="){
-            inputNumbers.textContent = `${calculate}`;
-            console.log(numbers)
-            numbers.pop();
-            numbers[0] = calculate;
-            console.log(numbers)
-        }
- 
+        calculate = operate(lastOperator, numbers[0], numbers[1]);
+        inputNumbers.textContent = `${calculate}`;
+        numbers.pop();
+        numbers[0] = calculate;
+      
     }
-    lastOperator = operatorSymbol;*/
+    lastOperator = operatorSymbol;
 }
 
 function choiceHandler(number){
@@ -114,7 +116,4 @@ numberButtons.forEach((numButton)=>{
         choiceHandler(Number(getNumber));
     })
 })
-
-
-
 
