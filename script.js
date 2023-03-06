@@ -25,7 +25,10 @@ function operate(operator, firstNumber, secondNumber){
         case '*':
             return mulAll(firstNumber,secondNumber);
         case '/':
-            return divAll(firstNumber,secondNumber);
+            if(secondNumber == 0){
+                alert('Division by zero is undefined');
+                location.reload();
+            } else return divAll(firstNumber,secondNumber);
 
     }
 };
@@ -42,37 +45,27 @@ inputNumbers.classList.add('display-font');
 let displayScreen = document.querySelector('.display')
 displayScreen.appendChild(inputNumbers);
 
-let evaluateEquation = document.querySelector('.equal')
-evaluateEquation.addEventListener('click', () => {
-    numbers.push(Number(currentNumberArray.join("")));
-    currentNumberArray.length = 0;
-    
+function evaluateEquation(){
     if(numbers.length == 2){
         calculate = operate(lastOperator, numbers[0], numbers[1]);
         inputNumbers.textContent = `${calculate}`;
         numbers.pop();
         numbers[0] = calculate;
     } 
-    equalPressed = 1;
-})
+}
+function displayClear(){
+    equalPressed = 0;
+    currentNumberArray.length = 0;
+    currentNumber = "";
+    inputNumbers.textContent = `${currentNumber}`;
+}
 
 function operatorHandler(operatorSymbol){
     if(equalPressed != 1){
         numbers.push(Number(currentNumberArray.join("")));
     }
-    equalPressed = 0;
-    currentNumberArray.length = 0;
-    currentNumber = "";
-    inputNumbers.textContent = `${currentNumber}`;
-    
-    
-    if(numbers.length == 2){
-        calculate = operate(lastOperator, numbers[0], numbers[1]);
-        inputNumbers.textContent = `${calculate}`;
-        numbers.pop();
-        numbers[0] = calculate;
-      
-    }
+    displayClear();
+    evaluateEquation();
     lastOperator = operatorSymbol;
 }
 
@@ -88,6 +81,15 @@ function choiceHandler(number){
 
     } 
 }
+
+let equalSignButton = document.querySelector('.equal')
+equalSignButton.addEventListener('click', () => {
+    numbers.push(Number(currentNumberArray.join("")));
+    currentNumberArray.length = 0;
+    evaluateEquation();
+    
+    equalPressed = 1;
+})
 
 /* Get the nodelist of all button-operators */
 let operatorButtons = document.querySelectorAll('.operator')
