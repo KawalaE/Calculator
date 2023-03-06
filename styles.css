@@ -52,7 +52,7 @@ button{
     margin-right: 8px;
     box-shadow: 2px 2px 5px 1px rgba(5, 5, 5, 0.8);
 }
-.plus, .divide, .multiply, .minus, .equal{
+.operator, .equal{
     background-color: #f0f5a6;
 }
 .additional-options{
@@ -68,7 +68,7 @@ button{
 button:hover{
     background-color: #c5f8de;
 }
-.plus:hover, .divide:hover, .multiply:hover, .minus:hover, .equal:hover{
+.operator:hover, .equal:hover{
     background-color: #f1e182;
 }
 

@@ -37,7 +37,6 @@ let currentNumberArray = [];
 let currentNumber = ""; 
 let numbers = [];
 let lastOperator;
-let operationValue = 0;
 let calculateValue = 0;
 let equalPressed = 0;
 let inputNumbers = document.createElement('div');
@@ -46,22 +45,25 @@ let displayScreen = document.querySelector('.display')
 displayScreen.appendChild(inputNumbers);
 
 function evaluateEquation(){
+ 
     if(numbers.length == 2){
         calculateValue = operate(lastOperator, numbers[0], numbers[1]);
         let newValue = (String(calculateValue).split(''));
         let decimalPoints;
         if(newValue.includes('.')){
-            decimalPoints = newValue.slice(newValue.indexOf('.')+1);
-            if (decimalPoints.length >=3){
+            decimalPoints = newValue.slice(newValue.indexOf('.') +1);
+            if (decimalPoints.length >= 3){
                 calculateValue = calculateValue.toFixed(3);
             } else if(decimalPoints == 2) calculateValue = calculateValue.toFixed(2);
-            if(decimalPoints[-1] == 0){calculateValue = Number (newValue.pop())}
+            if(decimalPoints[-1] == 0){calculateValue = Number(newValue.pop())}
         }
         inputNumbers.textContent = `${calculateValue}`;
         numbers.pop();
         numbers[0] = calculateValue;
+
     } 
 }
+
 function displayClear(){
     equalPressed = 0;
     currentNumberArray.length = 0;
@@ -81,23 +83,30 @@ function operatorHandler(operatorSymbol){
 function choiceHandler(number){
     /*Limit the amount of numbers visible at the display*/ 
     if(currentNumberArray.length <= 9){
+
         if(currentNumberArray[0] == "0" && currentNumberArray.length == 1 && !(number ==".")){
             currentNumberArray.shift();
+        } else{
+            currentNumberArray.push(number);
+            currentNumber = currentNumberArray.join("");
+            inputNumbers.textContent = `${currentNumber}`;
         }
-        currentNumberArray.push(number);
-        currentNumber = currentNumberArray.join("");
-        inputNumbers.textContent = `${currentNumber}`;
-
     } 
 }
 
 /*Handle equal sign*/
 let equalSignButton = document.querySelector('.equal')
 equalSignButton.addEventListener('click', () => {
-    numbers.push(Number(currentNumberArray.join("")));
-    currentNumberArray.length = 0;
-    evaluateEquation();
-    equalPressed = 1;
+    if(numbers.length == 0){
+        inputNumbers.textContent = 0;
+    }
+    else {
+        numbers.push(Number(currentNumberArray.join("")));
+        currentNumberArray.length = 0;
+        evaluateEquation();
+        equalPressed = 1;
+    }
+    
 })
 
 /* Get the nodelist of all button-operators */
@@ -109,7 +118,7 @@ operatorButtons.forEach((operButton) => {
         if(getOperator == '.'){
             if(currentNumberArray.length == 0 && !currentNumberArray.includes(".") && !currentNumberArray.includes("0.")){
                 choiceHandler("0.");
-            } else if(!currentNumberArray.includes(".") && !currentNumberArray.includes("0.")){choiceHandler(".")}
+            } else if(!currentNumberArray.includes(".") && !currentNumberArray.includes("0.") ){choiceHandler(".")}
         } else {
             operatorHandler(getOperator);
         }
@@ -122,7 +131,12 @@ let numberButtons = document.querySelectorAll('.number');
 
 numberButtons.forEach((numButton)=>{
     numButton.addEventListener('click', () => {
+        
         let getNumber = numButton.textContent;
+        if (equalPressed == 1){
+            numbers.length = 1;
+            numbers[0] = getNumber;
+        }
         choiceHandler(Number(getNumber));
     })
 })
@@ -135,7 +149,7 @@ additionalOperations.forEach((addOperation) => {
         console.log(getOperation)
         if (getOperation == 'CA'){
             displayClear();
-        }
-    })
+            numbers = [];
+        }})
     
 })
