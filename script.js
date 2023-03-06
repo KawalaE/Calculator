@@ -38,7 +38,7 @@ let currentNumber = "";
 let numbers = [];
 let lastOperator;
 let operationValue = 0;
-let calculate = 0;
+let calculateValue = 0;
 let equalPressed = 0;
 let inputNumbers = document.createElement('div');
 inputNumbers.classList.add('display-font');
@@ -47,10 +47,19 @@ displayScreen.appendChild(inputNumbers);
 
 function evaluateEquation(){
     if(numbers.length == 2){
-        calculate = operate(lastOperator, numbers[0], numbers[1]);
-        inputNumbers.textContent = `${calculate}`;
+        calculateValue = operate(lastOperator, numbers[0], numbers[1]);
+        let newValue = (String(calculateValue).split(''));
+        let decimalPoints;
+        if(newValue.includes('.')){
+            decimalPoints = newValue.slice(newValue.indexOf('.')+1);
+            if (decimalPoints.length >=3){
+                calculateValue = calculateValue.toFixed(3);
+            } else if(decimalPoints == 2) calculateValue = calculateValue.toFixed(2);
+            if(decimalPoints[-1] == 0){calculateValue = Number (newValue.pop())}
+        }
+        inputNumbers.textContent = `${calculateValue}`;
         numbers.pop();
-        numbers[0] = calculate;
+        numbers[0] = calculateValue;
     } 
 }
 function displayClear(){
@@ -82,12 +91,12 @@ function choiceHandler(number){
     } 
 }
 
+/*Handle equal sign*/
 let equalSignButton = document.querySelector('.equal')
 equalSignButton.addEventListener('click', () => {
     numbers.push(Number(currentNumberArray.join("")));
     currentNumberArray.length = 0;
     evaluateEquation();
-    
     equalPressed = 1;
 })
 
@@ -108,7 +117,6 @@ operatorButtons.forEach((operButton) => {
     })
 })
 
-
 /* Get the nodelist of all button-numbers */
 let numberButtons = document.querySelectorAll('.number');
 
@@ -119,3 +127,15 @@ numberButtons.forEach((numButton)=>{
     })
 })
 
+let additionalOperations = document.querySelectorAll('.additional-options') ;
+
+additionalOperations.forEach((addOperation) => {
+    addOperation.addEventListener('click', () => {
+        let getOperation = addOperation.textContent;
+        console.log(getOperation)
+        if (getOperation == 'CA'){
+            displayClear();
+        }
+    })
+    
+})
