@@ -31,7 +31,9 @@ body{
     width: 330px;
     height: 90px;
     border-radius: 20px;
-    outline: 3px solid rgb(71, 71, 71);
+    outline: 3px solid linear-gradient(45deg,
+    rgb(68, 68, 68), #797777
+  );;
     margin: 40px;
 }
 .numbers{
@@ -45,27 +47,32 @@ button{
     color: #020202;
     height: 70px;
     width: 70px;
-    background-color: #838584;
+    background-image: linear-gradient(45deg,
+    #5a5c5b, #aeafaf);   
     border-radius: 50%;
     border: none;
     margin-right: 8px;
 
 }
 .operator, .equal{
-    background-color: #7ae494;
+    background-image: linear-gradient(45deg,
+    #7ae494, #a0f1cb); 
 }
 .additional-options{
     height: 30px;
     width: 70px; 
     border-radius: 10px;
-    background-color: #7ae494;
+    background-image: linear-gradient(45deg,
+    #7ae494, #a0f1cb); 
     margin-bottom: 10px;
 }
 .additional-options:hover{
-    background-color: #59a76c;
+    background-image: linear-gradient(45deg,
+    #345f3f, #619c81); 
 }
 button:hover{
-    background-color:#58a371;
+    background-image: linear-gradient(45deg,
+    #345f3f, #619c81); 
     transform: scale(1.05);
 }
 button:active{
@@ -74,7 +81,8 @@ button:active{
 }
 
 .operator:hover, .equal:hover{
-    background-color: #58a371;
+    background-image: linear-gradient(45deg,
+    #345f3f, #619c81); 
 }
 
 .display-font{

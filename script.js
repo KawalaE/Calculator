@@ -48,6 +48,8 @@ displayScreen.appendChild(inputNumbers);
 function evaluateEquation(){
 
     if(numbers.length == 2){
+        console.log(numbers[0]);
+        console.log(numbers[1]);
         calculateValue = operate(lastOperator, numbers[0], numbers[1]);
         let newValue = (String(calculateValue).split(''));
         let decimalPoints;
@@ -63,6 +65,7 @@ function evaluateEquation(){
 
             decimalPoints = decimalPoints.join('');
             calculateValue = Number(`${newValue.slice(0,newValue.indexOf('.')).join('')}.${decimalPoints}`);
+            
         }
 
         if ((String(calculateValue).split('')).length > 8){
@@ -109,7 +112,7 @@ function choiceHandler(number){
     /*Limit the amount of numbers visible at the display*/ 
     if(currentNumberArray.length <= 9){
 
-        if(currentNumberArray[0] == "0" && currentNumberArray.length == 1 && !(number ==".")){
+        if(currentNumberArray[0] == "0" && currentNumberArray.length == 1 && !(number ==".") && !(number =='0.')){
             currentNumberArray.shift();
         }
         currentNumberArray.push(number);
