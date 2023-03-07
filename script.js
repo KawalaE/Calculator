@@ -50,12 +50,26 @@ function evaluateEquation(){
         calculateValue = operate(lastOperator, numbers[0], numbers[1]);
         let newValue = (String(calculateValue).split(''));
         let decimalPoints;
+
         if(newValue.includes('.')){
             decimalPoints = newValue.slice(newValue.indexOf('.') +1);
-            if (decimalPoints.length >= 3){
-                calculateValue = calculateValue.toFixed(3);
-            } else if(decimalPoints == 2) calculateValue = calculateValue.toFixed(2);
-            if(decimalPoints[-1] == 0){calculateValue = Number(newValue.pop())}
+            console.log(decimalPoints)
+            if (decimalPoints.length > 8){
+                decimalPoints.length = 7;
+            } 
+            for(let i=decimalPoints.length-1; i>=0; i--){
+                if(decimalPoints[i] == 0){
+                    decimalPoints.pop()
+                    console.log(decimalPoints)
+                }else if(decimalPoints[i] !=0){break}
+                
+            }
+            decimalPoints = decimalPoints.join('');
+            calculateValue = Number(`${newValue.slice(0,newValue.indexOf('.')).join('')}.${decimalPoints}`);
+            if (decimalPoints.length > 8){
+                calculateValue = calculateValue.toFixed(7);
+            } 
+            
         }
         inputNumbers.textContent = `${calculateValue}`;
         numbers.pop();
@@ -63,7 +77,13 @@ function evaluateEquation(){
 
     } 
 }
-
+function removeNumber(){
+    if(currentNumberArray.length){
+        currentNumberArray.pop();
+        currentNumber = currentNumberArray.join('');
+        inputNumbers.textContent = `${currentNumber}`;
+    }
+}
 function displayClear(){
     equalPressed = 0;
     currentNumberArray.length = 0;
@@ -131,7 +151,6 @@ let numberButtons = document.querySelectorAll('.number');
 
 numberButtons.forEach((numButton)=>{
     numButton.addEventListener('click', () => {
-        
         let getNumber = numButton.textContent;
         if (equalPressed == 1){
             numbers.length = 1;
@@ -150,6 +169,8 @@ additionalOperations.forEach((addOperation) => {
         if (getOperation == 'CA'){
             displayClear();
             numbers = [];
+        }if(getOperation == 'CE'){
+            removeNumber();
         }})
     
 })
