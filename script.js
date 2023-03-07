@@ -38,6 +38,7 @@ let currentNumber = "";
 let numbers = [];
 let lastOperator;
 let calculateValue = 0;
+let operatorUsed = 0;
 let equalPressed = 0;
 let inputNumbers = document.createElement('div');
 inputNumbers.classList.add('display-font');
@@ -45,7 +46,7 @@ let displayScreen = document.querySelector('.display')
 displayScreen.appendChild(inputNumbers);
 
 function evaluateEquation(){
- 
+
     if(numbers.length == 2){
         calculateValue = operate(lastOperator, numbers[0], numbers[1]);
         let newValue = (String(calculateValue).split(''));
@@ -54,27 +55,31 @@ function evaluateEquation(){
         if(newValue.includes('.')){
             decimalPoints = newValue.slice(newValue.indexOf('.') +1);
             console.log(decimalPoints)
-            if (decimalPoints.length > 8){
-                decimalPoints.length = 7;
-            } 
             for(let i=decimalPoints.length-1; i>=0; i--){
                 if(decimalPoints[i] == 0){
                     decimalPoints.pop()
-                    console.log(decimalPoints)
-                }else if(decimalPoints[i] !=0){break}
-                
+                }else if(decimalPoints[i] !=0){break}   
             }
+
             decimalPoints = decimalPoints.join('');
             calculateValue = Number(`${newValue.slice(0,newValue.indexOf('.')).join('')}.${decimalPoints}`);
-            if (decimalPoints.length > 8){
-                calculateValue = calculateValue.toFixed(7);
-            } 
-            
         }
+
+        if ((String(calculateValue).split('')).length > 8){
+            calculateValue = calculateValue.toFixed(8);
+            calculateValue = String(calculateValue).split('');
+            for(let i=calculateValue.length-1; i>=0; i--){
+                if(calculateValue[i] == 0){
+                    calculateValue.pop()
+                }else if(calculateValue[i] !=0){break}   
+            }
+            calculateValue = Number(calculateValue.join(''));
+        } 
+
         inputNumbers.textContent = `${calculateValue}`;
         numbers.pop();
         numbers[0] = calculateValue;
-
+        operatorUsed =0;
     } 
 }
 function removeNumber(){
@@ -106,27 +111,26 @@ function choiceHandler(number){
 
         if(currentNumberArray[0] == "0" && currentNumberArray.length == 1 && !(number ==".")){
             currentNumberArray.shift();
-        } else{
-            currentNumberArray.push(number);
-            currentNumber = currentNumberArray.join("");
-            inputNumbers.textContent = `${currentNumber}`;
         }
+        currentNumberArray.push(number);
+        currentNumber = currentNumberArray.join("");
+        inputNumbers.textContent = `${currentNumber}`;
+        
     } 
 }
 
 /*Handle equal sign*/
 let equalSignButton = document.querySelector('.equal')
 equalSignButton.addEventListener('click', () => {
-    if(numbers.length == 0){
-        inputNumbers.textContent = 0;
-    }
-    else {
+    if(operatorUsed){
         numbers.push(Number(currentNumberArray.join("")));
         currentNumberArray.length = 0;
         evaluateEquation();
-        equalPressed = 1;
+        equalPressed = 1
+    } else{
+        currentNumberArray.length = 0;
+
     }
-    
 })
 
 /* Get the nodelist of all button-operators */
@@ -134,6 +138,7 @@ let operatorButtons = document.querySelectorAll('.operator')
 
 operatorButtons.forEach((operButton) => {
     operButton.addEventListener('click', () => {
+        operatorUsed =1;
         let getOperator = operButton.textContent;
         if(getOperator == '.'){
             if(currentNumberArray.length == 0 && !currentNumberArray.includes(".") && !currentNumberArray.includes("0.")){
@@ -151,12 +156,13 @@ let numberButtons = document.querySelectorAll('.number');
 
 numberButtons.forEach((numButton)=>{
     numButton.addEventListener('click', () => {
-        let getNumber = numButton.textContent;
+        let getNumber = Number(numButton.textContent);
         if (equalPressed == 1){
             numbers.length = 1;
-            numbers[0] = getNumber;
+            numbers[0]=getNumber;
         }
-        choiceHandler(Number(getNumber));
+        choiceHandler(getNumber);
+        
     })
 })
 
@@ -165,7 +171,6 @@ let additionalOperations = document.querySelectorAll('.additional-options') ;
 additionalOperations.forEach((addOperation) => {
     addOperation.addEventListener('click', () => {
         let getOperation = addOperation.textContent;
-        console.log(getOperation)
         if (getOperation == 'CA'){
             displayClear();
             numbers = [];
