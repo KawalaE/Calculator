@@ -77,7 +77,7 @@ button:hover{
 }
 button:active{
     background-color:#58a371;
-    transform: scale(0.95);
+    transform:translateY(5px);
 }
 
 .operator:hover, .equal:hover{

@@ -37,7 +37,7 @@ function operate(operator, firstNumber, secondNumber){
             return mulAll(firstNumber,secondNumber);
         case '/':
             if(secondNumber == 0){
-                alert('Division by zero is undefined');
+                displayContent.textContent = 'Err';
                 location.reload();
             } else return divAll(firstNumber,secondNumber);
 
@@ -48,39 +48,25 @@ function evaluateEquation(){
 
     if(numbers.length == 2){
         calculateValue = operate(lastOperator, numbers[0], numbers[1]);
-        let newValue = (String(calculateValue).split(''));
-        let ble = newValue.slice(0,newValue.indexOf('.')).join('');
-        let decimalPoints;
-
-        if(newValue.includes('.')){
-            decimalPoints = newValue.slice(newValue.indexOf('.') +1);
-
-            for(let i=decimalPoints.length-1; i>=0; i--){
-                if(decimalPoints[i] == 0){
-                    decimalPoints.pop()
-                }else if(decimalPoints[i] !=0){break}   
-            }
-
-            decimalPoints = decimalPoints.join('');
-            calculateValue = Number(`${ble}.${decimalPoints}`);
-
+        let stringValue = String(calculateValue);
+        let decimalArr = (stringValue.split('')).slice(stringValue.indexOf('.') + 1, stringValue.length);
+        let integerArr = (stringValue.split('')).slice(0, stringValue.indexOf('.'));
+        if(decimalArr.length == 3){
+            calculateValue = parseFloat(calculateValue.toFixed(3));
+        }else if(decimalArr.length == 2){
+            calculateValue = parseFloat(calculateValue.toFixed(2));
+        } else if(decimalArr.length ==1){
+            calculateValue = parseFloat(calculateValue.toFixed(1));
+        }else{
+            calculateValue = parseFloat(calculateValue.toFixed((9 - (integerArr.length))));
         }
-
-        if ((String(calculateValue).split('')).length > 8){
-            calculateValue = calculateValue.toFixed(8);
-            calculateValue = String(calculateValue).split('');
-            for(let i=calculateValue.length-1; i>=0; i--){
-                if(calculateValue[i] == 0){
-                    calculateValue.pop()
-                }else if(calculateValue[i] !=0){break}   
-            }
-            calculateValue = Number(calculateValue.join(''));
-        } 
-
+        
         displayContent.textContent = `${calculateValue}`;
         numbers.pop();
         numbers[0] = calculateValue;
         operatorUsed =0;
+ 
+        
     } 
 }
 function removeNumber(){
@@ -103,7 +89,7 @@ function operatorHandler(operatorSymbol){
     if(equalPressed == false && numbers.length == 1) {
         numbers.push(Number(currentNumberArray.join("")));
     }
-    if(numbers.length == false){
+    if(numbers.length == 0){
         numbers.push(Number(currentNumberArray.join("")));
     }
     equalPressed = false;
