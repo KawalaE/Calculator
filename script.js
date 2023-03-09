@@ -37,8 +37,8 @@ function operate(operator, firstNumber, secondNumber){
             return mulAll(firstNumber,secondNumber);
         case '/':
             if(secondNumber == 0){
-                displayContent.textContent = 'Err';
-                location.reload();
+                displayContent.textContent = 'division Err';
+                setTimeout(location.reload.bind(location), 600);
             } else return divAll(firstNumber,secondNumber);
 
     }
@@ -51,20 +51,33 @@ function evaluateEquation(){
         let stringValue = String(calculateValue);
         let decimalArr = (stringValue.split('')).slice(stringValue.indexOf('.') + 1, stringValue.length);
         let integerArr = (stringValue.split('')).slice(0, stringValue.indexOf('.'));
-        if(decimalArr.length == 3){
-            calculateValue = parseFloat(calculateValue.toFixed(3));
-        }else if(decimalArr.length == 2){
-            calculateValue = parseFloat(calculateValue.toFixed(2));
-        } else if(decimalArr.length ==1){
-            calculateValue = parseFloat(calculateValue.toFixed(1));
-        }else{
-            calculateValue = parseFloat(calculateValue.toFixed((9 - (integerArr.length))));
+
+        if(integerArr.length >= 10){
+            displayContent.textContent = `display Err`;
+            setTimeout(location.reload.bind(location), 600);
+
         }
+
+        if(decimalArr.length){
+            if(decimalArr.length == 3){
+                calculateValue = parseFloat(calculateValue.toFixed(3));
+            }else if(decimalArr.length == 2){
+                calculateValue = parseFloat(calculateValue.toFixed(2));
+            } else if(decimalArr.length ==1){
+                calculateValue = parseFloat(calculateValue.toFixed(1));
+            }else{
+                calculateValue = parseFloat(calculateValue.toFixed((9 - (integerArr.length))));
+            }
+        }
+        
+
         
         displayContent.textContent = `${calculateValue}`;
         numbers.pop();
         numbers[0] = calculateValue;
         operatorUsed =0;
+        
+        
  
         
     } 
