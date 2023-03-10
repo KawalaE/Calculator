@@ -55,9 +55,7 @@ function evaluateEquation(){
         if(integerArr.length >= 10){
             displayContent.textContent = `display Err`;
             setTimeout(location.reload.bind(location), 600);
-
         }
-
         if(decimalArr.length){
             if(decimalArr.length == 3){
                 calculateValue = parseFloat(calculateValue.toFixed(3));
@@ -69,17 +67,10 @@ function evaluateEquation(){
                 calculateValue = parseFloat(calculateValue.toFixed((9 - (integerArr.length))));
             }
         }
-        
-
-        
         displayContent.textContent = `${calculateValue}`;
         numbers.pop();
         numbers[0] = calculateValue;
         operatorUsed =0;
-        
-        
- 
-        
     } 
 }
 function removeNumber(){
@@ -170,4 +161,14 @@ additionalOperations.forEach((addOperation) => {
         }if(getOperation == 'CE'){
             removeNumber();
         }})
+})
+
+
+document.addEventListener('keydown', (e) => {
+    if(e.key >=0 && e.key <= 10){                                                                                                                                                                                                                   
+        console.log(e.key)
+        numberHandler(e.key);
+    } else if(e.key == '*' || e.key == '-' || e.key == '+' || e.key == '/' || e.key == '.'){
+        operatorHandler(getOperator);
+    }                                    
 })
