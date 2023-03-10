@@ -103,7 +103,6 @@ function operatorHandler(operatorSymbol){
     lastOperator = operatorSymbol;
 }
 
-
 function numberHandler(number){
     /*Limit the amount of numbers visible at the display*/ 
     if(currentNumberArray.length <= 9){
@@ -123,6 +122,13 @@ function equalSignFunction(){
     }
     equalPressed = true;
 }
+
+function dotHandler(e){
+    if(currentNumberArray.length == 0 && !currentNumberArray.includes(".") && !currentNumberArray.includes("0.")){
+        numberHandler("0.");
+    } else if(!currentNumberArray.includes(".") && !currentNumberArray.includes("0.") ){numberHandler(".")}
+}
+
 /*Handle equal sign*/
 let equalSignButton = document.querySelector('.equal')
 equalSignButton.addEventListener('click', () => equalSignFunction());
@@ -137,22 +143,16 @@ operatorButtons.forEach((operatorButton) => {
     })
 })
 
-function dotHandler(e){
-    if(currentNumberArray.length == 0 && !currentNumberArray.includes(".") && !currentNumberArray.includes("0.")){
-        numberHandler("0.");
-    } else if(!currentNumberArray.includes(".") && !currentNumberArray.includes("0.") ){numberHandler(".")}
-}
 /* Get the nodelist of all button-numbers */
 let numberButtons = document.querySelectorAll('.number');
 numberButtons.forEach((numButton)=>{
     numButton.addEventListener('click', () => {
-        let getNumber = Number(numButton.textContent);
+        let getNumber = numButton.textContent;
         if(getNumber === '.'){
             dotHandler(getNumber);
         } else{
             numberHandler(getNumber);
         }
-        
     })
 })
 
@@ -169,7 +169,7 @@ additionalOperations.forEach((addOperation) => {
         }})
 })
 
-
+/*Handle keyboard*/
 document.addEventListener('keydown', (e) => {
     if(e.key >=0 && e.key <= 10){                                                                                                                                                                                                                   
         numberHandler(e.key);
@@ -184,7 +184,7 @@ document.addEventListener('keydown', (e) => {
     if(e.key === '.') dotHandler(e.key);
 
     if (e.key === '=' || e.key === 'Enter'){
-        equalSignFunction()
+        equalSignFunction();
     }
     if (e.key === 'Backspace') removeNumber();
     
