@@ -115,38 +115,44 @@ function numberHandler(number){
     } 
 }
 
-/*Handle equal sign*/
-let equalSignButton = document.querySelector('.equal')
-equalSignButton.addEventListener('click', () => {
+function equalSignFunction(){
     if(operatorUsed){
         numbers.push(Number(currentNumberArray.join("")));
         currentNumberArray.length = 0;
         evaluateEquation();   
     }
     equalPressed = true;
-})
+}
+/*Handle equal sign*/
+let equalSignButton = document.querySelector('.equal')
+equalSignButton.addEventListener('click', () => equalSignFunction());
+
 
 /* Get the nodelist of all button-operators */
 let operatorButtons = document.querySelectorAll('.operator')
 operatorButtons.forEach((operatorButton) => {
     operatorButton.addEventListener('click', () => {
         let getOperator = operatorButton.textContent;
-        if(getOperator == '.'){
-            if(currentNumberArray.length == 0 && !currentNumberArray.includes(".") && !currentNumberArray.includes("0.")){
-                numberHandler("0.");
-            } else if(!currentNumberArray.includes(".") && !currentNumberArray.includes("0.") ){numberHandler(".")}
-        } else {
-            operatorHandler(getOperator);
-        }
+        operatorHandler(getOperator);
     })
 })
 
+function dotHandler(e){
+    if(currentNumberArray.length == 0 && !currentNumberArray.includes(".") && !currentNumberArray.includes("0.")){
+        numberHandler("0.");
+    } else if(!currentNumberArray.includes(".") && !currentNumberArray.includes("0.") ){numberHandler(".")}
+}
 /* Get the nodelist of all button-numbers */
 let numberButtons = document.querySelectorAll('.number');
 numberButtons.forEach((numButton)=>{
     numButton.addEventListener('click', () => {
         let getNumber = Number(numButton.textContent);
-        numberHandler(getNumber);
+        if(getNumber === '.'){
+            dotHandler(getNumber);
+        } else{
+            numberHandler(getNumber);
+        }
+        
     })
 })
 
@@ -166,9 +172,22 @@ additionalOperations.forEach((addOperation) => {
 
 document.addEventListener('keydown', (e) => {
     if(e.key >=0 && e.key <= 10){                                                                                                                                                                                                                   
-        console.log(e.key)
         numberHandler(e.key);
-    } else if(e.key == '*' || e.key == '-' || e.key == '+' || e.key == '/' || e.key == '.'){
-        operatorHandler(getOperator);
-    }                                    
+    } 
+    if (e.key === '+' || e.key === '-' || e.key === '*'){
+        operatorHandler(e.key);
+    }
+    if(e.key === '/'){
+        e.preventDefault();
+        operatorHandler(e.key);
+    }
+    if(e.key === '.') dotHandler(e.key);
+
+    if (e.key === '=' || e.key === 'Enter'){
+        equalSignFunction()
+    }
+    if (e.key === 'Backspace') removeNumber();
+    
+    if (e.key === 'Escape') displayClear();             
 })
+
